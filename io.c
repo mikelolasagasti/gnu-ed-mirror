@@ -25,9 +25,9 @@
 
 
 static const line_node * unterminated_line = 0;	/* last line has no '\n' */
-static int linenum_ = 0;			/* script line number */
+static unsigned linenum_ = 0;			/* script line number */
 
-int linenum( void ) { return linenum_; }
+unsigned linenum( void ) { return linenum_; }
 
 void reset_unterminated_line( void ) { unterminated_line = 0; }
 

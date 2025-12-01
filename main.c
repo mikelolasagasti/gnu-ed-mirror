@@ -79,6 +79,8 @@ static void show_help( void )
   printf( "\nThe file name may be preceded by '+line', '+/RE', or '+?RE' to set the\n"
           "current line to the line number specified or to the first or last line\n"
           "matching the regular expression 'RE'.\n"
+          "\nStart edit by reading in 'file' if given.\n"
+          "If 'file' begins with a '!', read output of shell command.\n"
           "\nThe environment variable LINES can be used to set the initial window size.\n"
           "\nOptions:\n"
           "  -h, --help                 display this help and exit\n"
@@ -93,13 +95,11 @@ static void show_help( void )
           "  -v, --verbose              be verbose; equivalent to the 'H' command\n"
           "      --strip-trailing-cr    strip carriage returns at end of text lines\n"
           "      --unsafe-names         allow control characters in file names\n"
-          "\nStart edit by reading in 'file' if given.\n"
-          "If 'file' begins with a '!', read output of shell command.\n"
-          "\nExit status: 0 for a normal exit, 1 for environmental problems\n"
-          "(invalid command-line options, memory exhausted, command failed, etc),\n"
-          "2 for problems with the input file (file not found, buffer modified,\n"
-          "I/O errors), 3 for an internal consistency error (e.g., bug) which caused\n"
-          "ed to panic.\n"
+          "\n*Exit status*\n"
+          "0 for a normal exit, 1 for environmental problems (invalid command-line\n"
+          "options, memory exhausted, command failed, etc), 2 for problems with the\n"
+          "input file (file not found, buffer modified, I/O errors), 3 for an internal\n"
+          "consistency error (e.g., bug) which caused ed to panic.\n"
           "\nReport bugs to bug-ed@gnu.org\n"
           "Ed home page: http://www.gnu.org/software/ed/ed.html\n"
           "General help using GNU software: http://www.gnu.org/gethelp\n" );
@@ -208,9 +208,10 @@ bool may_access_filename( const char * const name )
       { set_error_msg( "Newline character not allowed in file names" );
         return false; }
   if( safe_names )
-    for( p = name; *p; ++p ) if( ( *p <= 31 && *p >= 1 ) || *p == 127 )
-      { set_error_msg( "Control characters not allowed in file names" );
-        return false; }
+    for( p = name; *p; ++p )
+      if( ( *p <= 13 && *p >= 7 ) || *p == 27 || *p == 127 )
+        { set_error_msg( "Control characters not allowed in file names" );
+          return false; }
   return true;
   }
 

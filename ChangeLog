@@ -1,3 +1,12 @@
+2025-11-27  Antonio Diaz Diaz  <antonio@gnu.org>
+
+	* Version 1.22.3 released.
+	* main.c: (show_help): Print "*Exit status*" for section in man page.
+	  (may_access_filename): Reject only control chars 7-13, 27, 127.
+	* main_loop.c (get_shell_command): Revert to using 'printf'.
+	  (Reported by Sören Tempel).
+	* check.sh: Check non-ASCII file names coded in ISO-8859-1 and UTF-8.
+
 2025-08-18  Antonio Diaz Diaz  <antonio@gnu.org>
 
 	* Version 1.22.2 released.
