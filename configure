@@ -6,7 +6,7 @@
 # to copy, distribute, and modify it.
 
 pkgname=ed
-pkgversion=1.22.2
+pkgversion=1.22.3
 progname=ed
 srctrigger=doc/${pkgname}.texi
 
@@ -104,11 +104,9 @@ while [ $# != 0 ] ; do
 	LDFLAGS=*)    LDFLAGS=${optarg} ;;
 	MAKEINFO=*)  MAKEINFO=${optarg} ;;
 
-	--*)
-		echo "configure: WARNING: unrecognized option: '${option}'" 1>&2 ;;
+	--*) echo "configure: WARNING: unrecognized option: '${option}'" 1>&2 ;;
 	*=* | *-*-*) ;;
-	*)
-		echo "configure: unrecognized option: '${option}'" 1>&2
+	*)	echo "configure: unrecognized option: '${option}'" 1>&2
 		echo "Try 'configure --help' for more information." 1>&2
 		exit 1 ;;
 	esac

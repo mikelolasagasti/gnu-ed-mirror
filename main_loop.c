@@ -161,8 +161,7 @@ static const char * get_shell_command( const char ** const ibufpp )
   if( !resize_buffer( &shcmd, &shcmdsz, i + 1 ) ) return 0;
   memcpy( shcmd, buf, i );
   shcmd[i] = 0; shcmdlen = i;
-  if( replacement )
-    { print_escaped( shcmd + 1, true ); putchar('\n'); fflush( stdout ); }
+  if( replacement ) { printf( "%s\n", shcmd + 1 ); fflush( stdout ); }
   return shcmd;
   }
 
@@ -844,7 +843,7 @@ int main_loop( const bool initial_error, const bool loose )
     set_warned( status == EMOD );		/* errors reset warned */
     if( warned() ) set_error_msg( "Warning: buffer modified" );
     if( !interactive() )
-      { if( verbose ) printf( "script, line %d: %s\n", linenum(), errmsg );
+      { if( verbose ) printf( "script, line %u: %s\n", linenum(), errmsg );
         return ( status == FATAL ) ? 1 : err_status; }
     if( status == FATAL )
       { if( verbose ) { printf( "%s\n", errmsg ); } return 1; }

@@ -6,8 +6,8 @@
 @finalout
 @c %**end of header
 
-@set UPDATED 18 August 2025
-@set VERSION 1.22.2
+@set UPDATED 27 November 2025
+@set VERSION 1.22.3
 
 @dircategory Basics
 @direntry
@@ -455,9 +455,10 @@ unterminated line, are not removed. The CRs are not restored when saving the
 buffer to a file.
 
 @item --unsafe-names
-@command{ed} rejects file names containing control characters unless they
-are allowed with this option. Newline characters in file names are rejected
-even if this option is specified.
+@command{ed} rejects file names containing the control characters @samp{\a},
+@samp{\b}, @samp{\t}, @samp{\v}, @samp{\f}, @samp{\r}, @samp{\033}, and
+@samp{\177} unless they are allowed with this option. Newline characters in
+file names are rejected even if this option is specified.
 
 @end table
 
