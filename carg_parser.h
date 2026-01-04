@@ -1,5 +1,5 @@
 /* Arg_parser - POSIX/GNU command-line argument parser. (C version)
-   Copyright (C) 2006-2025 Antonio Diaz Diaz.
+   Copyright (C) 2006-2026 Antonio Diaz Diaz.
 
    This library is free software. Redistribution and use in source and
    binary forms, with or without modification, are permitted provided
@@ -31,7 +31,7 @@
    before all the non-option arguments for the purposes of parsing, even if
    the user of your program intermixed options and non-option arguments. If
    you want the arguments in the exact order the user typed them, call
-   'ap_init' with 'in_order' = true.
+   'ap_init' with 'flags' = 'ap_in_order'.
 
    The argument '--' terminates all options; any following arguments are
    treated as non-option arguments, even if they begin with a hyphen.
@@ -48,6 +48,8 @@
 extern "C" {
 #endif
 
+enum ap_Flags { ap_in_order = 1, ap_in_order_stop = 2, ap_in_order_skip = 4,
+                ap_neg_non_opt = 8 };		/* negative is non-option */
 /* ap_yesme = yes but maybe empty */
 typedef enum ap_Has_arg { ap_no, ap_yes, ap_maybe, ap_yesme } ap_Has_arg;
 
@@ -72,17 +74,19 @@ typedef struct Arg_parser
   ap_Record * data;
   char * error;
   int data_size;
+  int argv_index;
   } Arg_parser;
 
 
 /* Return 0 only if out of memory. */
 char ap_init( Arg_parser * const ap,
               const int argc, const char * const argv[],
-              const ap_Option options[], const char in_order );
+              const ap_Option options[], const int flags );
 
 void ap_free( Arg_parser * const ap );
 
 const char * ap_error( const Arg_parser * const ap );
+int ap_argv_index( const Arg_parser * const ap );
 
 /* The number of arguments parsed. May be different from argc. */
 int ap_arguments( const Arg_parser * const ap );

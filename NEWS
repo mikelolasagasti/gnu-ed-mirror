@@ -1,4 +1,11 @@
+Changes in version 1.22.4:
+
+'make check' now skips the checking of file names with non-ASCII non-UTF-8
+characters on file systems where such characters are invalid.
+(Reported by Michael Daniels and Alexander Jones).
+
 Changes in version 1.22.3:
+
 The change to print the file name escaped when replaced into a shell command
 has been reverted. (Reported by Sören Tempel).
 
@@ -11,6 +18,7 @@ ISO-8859-1 or in UTF-8.
 'EXIT STATUS' now has its own section in the man page.
 
 Changes in version 1.22.2:
+
 Newline characters are no longer allowed in file names even if
 '--unsafe-names' is specified.
 

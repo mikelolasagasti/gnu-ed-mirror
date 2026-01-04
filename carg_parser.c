@@ -1,5 +1,5 @@
 /* Arg_parser - POSIX/GNU command-line argument parser. (C version)
-   Copyright (C) 2006-2025 Antonio Diaz Diaz.
+   Copyright (C) 2006-2026 Antonio Diaz Diaz.
 
    This library is free software. Redistribution and use in source and
    binary forms, with or without modification, are permitted provided
@@ -17,10 +17,19 @@
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 */
 
+#include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include "carg_parser.h"
+
+
+static char is_number( const char * const p )
+  {
+  return isdigit( *p ) || ( *p == '.' && isdigit( p[1] ) ) ||
+         strcmp( p, "inf" ) == 0 || strcmp( p, "Inf" ) == 0 ||
+         strcmp( p, "INF" ) == 0;
+  }
 
 
 /* assure at least a minimum size for buffer 'buf' */
@@ -216,7 +225,7 @@ static char parse_short_option( Arg_parser * const ap,
 /* Return 0 only if out of memory. */
 char ap_init( Arg_parser * const ap,
               const int argc, const char * const argv[],
-              const ap_Option options[], const char in_order )
+              const ap_Option options[], const int flags )
   {
   const char ** non_options = 0;	/* skipped non-options */
   int non_options_size = 0;		/* number of skipped non-options */
@@ -226,6 +235,7 @@ char ap_init( Arg_parser * const ap,
   ap->data = 0;
   ap->error = 0;
   ap->data_size = 0;
+  ap->argv_index = argc;
   if( argc < 2 || !argv || !options ) return 1;
 
   while( argind < argc )
@@ -233,9 +243,10 @@ char ap_init( Arg_parser * const ap,
     const unsigned char ch1 = argv[argind][0];
     const unsigned char ch2 = ch1 ? argv[argind][1] : 0;
 
-    if( ch1 == '-' && ch2 )		/* we found an option */
+    if( ch1 == '-' && ch2 && ( ch2 == '-' || (flags & ap_neg_non_opt) == 0 ||
+                               !is_number( argv[argind] + 1 ) ) )
       {
-      const char * const opt = argv[argind];
+      const char * const opt = argv[argind];	/* we found an option */
       const char * const arg = ( argind + 1 < argc ) ? argv[argind+1] : 0;
       if( ch2 == '-' )
         {
@@ -245,7 +256,8 @@ char ap_init( Arg_parser * const ap,
       else if( !parse_short_option( ap, opt, arg, options, &argind ) ) goto oom;
       if( ap->error ) break;
       }
-    else if( in_order )
+    else if( flags & (ap_in_order_stop | ap_in_order_skip) ) break;
+    else if( flags & ap_in_order )
       { if( !push_back_argument( ap, argv[argind++] ) ) goto oom; }
     else
       {
@@ -257,7 +269,8 @@ char ap_init( Arg_parser * const ap,
       }
     }
   if( ap->error ) free_data( ap );
-  else
+  else if( flags & ap_in_order_skip ) ap->argv_index = argind;
+  else						/* copy non-option arguments */
     {
     int i;
     for( i = 0; i < non_options_size; ++i )
@@ -279,6 +292,8 @@ void ap_free( Arg_parser * const ap )
 
 
 const char * ap_error( const Arg_parser * const ap ) { return ap->error; }
+
+int ap_argv_index( const Arg_parser * const ap ) { return ap->argv_index; }
 
 int ap_arguments( const Arg_parser * const ap ) { return ap->data_size; }
 
