@@ -1,5 +1,5 @@
 /* GNU ed - The GNU line editor.
-   Copyright (C) 2006-2025 Antonio Diaz Diaz.
+   Copyright (C) 2006-2026 Antonio Diaz Diaz.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -47,7 +47,7 @@
 
 
 static const char * const program_name = "ed";
-static const char * const program_year = "2025";
+static const char * const program_year = "2026";
 static const char * invocation_name = "ed";		/* default value */
 
 static bool extended_regexp_ = false;	/* use EREs */
@@ -68,41 +68,43 @@ bool traditional( void ) { return traditional_; }
 
 static void show_help( void )
   {
-  printf( "GNU ed is a line-oriented text editor. It is used to create, display,\n"
-          "modify and otherwise manipulate text files, both interactively and via\n"
-          "shell scripts. A restricted version of ed, red, can only edit files in\n"
-          "the current directory and cannot execute shell commands. Ed is the\n"
-          "'standard' text editor in the sense that it is the original editor for\n"
-          "Unix, and thus widely available. For most purposes, however, it is\n"
-          "superseded by full-screen editors.\n"
-          "\nUsage: %s [options] [[+line] file]\n", invocation_name );
-  printf( "\nThe file name may be preceded by '+line', '+/RE', or '+?RE' to set the\n"
-          "current line to the line number specified or to the first or last line\n"
-          "matching the regular expression 'RE'.\n"
-          "\nStart edit by reading in 'file' if given.\n"
-          "If 'file' begins with a '!', read output of shell command.\n"
-          "\nThe environment variable LINES can be used to set the initial window size.\n"
-          "\nOptions:\n"
-          "  -h, --help                 display this help and exit\n"
-          "  -V, --version              output version information and exit\n"
-          "  -E, --extended-regexp      use extended regular expressions\n"
-          "  -G, --traditional          run in compatibility mode\n"
-          "  -l, --loose-exit-status    exit with 0 status even if a command fails\n"
-          "  -p, --prompt=STRING        use STRING as an interactive prompt\n"
-          "  -q, --quiet, --silent      suppress diagnostics written to stderr\n"
-          "  -r, --restricted           run in restricted mode\n"
-          "  -s, --script               suppress byte counts and '!' prompt\n"
-          "  -v, --verbose              be verbose; equivalent to the 'H' command\n"
-          "      --strip-trailing-cr    strip carriage returns at end of text lines\n"
-          "      --unsafe-names         allow control characters in file names\n"
-          "\n*Exit status*\n"
-          "0 for a normal exit, 1 for environmental problems (invalid command-line\n"
-          "options, memory exhausted, command failed, etc), 2 for problems with the\n"
-          "input file (file not found, buffer modified, I/O errors), 3 for an internal\n"
-          "consistency error (e.g., bug) which caused ed to panic.\n"
-          "\nReport bugs to bug-ed@gnu.org\n"
-          "Ed home page: http://www.gnu.org/software/ed/ed.html\n"
-          "General help using GNU software: http://www.gnu.org/gethelp\n" );
+  fputs(
+    "GNU ed is a line-oriented text editor. It is used to create, display,\n"
+    "modify and otherwise manipulate text files, both interactively and via\n"
+    "shell scripts. A restricted version of ed, red, can only edit files in\n"
+    "the current directory and cannot execute shell commands. Ed is the\n"
+    "'standard' text editor in the sense that it is the original editor for\n"
+    "Unix, and thus widely available. For most purposes, however, it is\n"
+    "superseded by full-screen editors.\n", stdout );
+  printf( "\nUsage: %s [options] [[+line] file]\n", invocation_name );
+  fputs(
+    "\nThe file name may be preceded by '+line', '+/RE', or '+?RE' to set the\n"
+    "current line to the line number specified or to the first or last line\n"
+    "matching the regular expression 'RE'.\n"
+    "\nStart edit by reading in 'file' if given.\n"
+    "If 'file' begins with a '!', read output of shell command.\n"
+    "\nThe environment variable LINES can be used to set the initial window size.\n"
+    "\nOptions:\n"
+    "  -h, --help                 display this help and exit\n"
+    "  -V, --version              output version information and exit\n"
+    "  -E, --extended-regexp      use extended regular expressions\n"
+    "  -G, --traditional          run in compatibility mode\n"
+    "  -l, --loose-exit-status    exit with 0 status even if a command fails\n"
+    "  -p, --prompt=STRING        use STRING as an interactive prompt\n"
+    "  -q, --quiet, --silent      suppress diagnostics written to stderr\n"
+    "  -r, --restricted           run in restricted mode\n"
+    "  -s, --script               suppress byte counts and '!' prompt\n"
+    "  -v, --verbose              be verbose; equivalent to the 'H' command\n"
+    "      --strip-trailing-cr    strip carriage returns at end of text lines\n"
+    "      --unsafe-names         allow control characters in file names\n"
+    "\n*Exit status*\n"
+    "0 for a normal exit, 1 for environmental problems (invalid command-line\n"
+    "options, memory exhausted, command failed, etc), 2 for problems with the\n"
+    "input file (file not found, buffer modified, I/O errors), 3 for an internal\n"
+    "consistency error (e.g., bug) which caused ed to panic.\n"
+    "\nReport bugs to bug-ed@gnu.org\n"
+    "Ed home page: http://www.gnu.org/software/ed/ed.html\n"
+    "General help using GNU software: http://www.gnu.org/gethelp\n", stdout );
   }
 
 
@@ -111,9 +113,9 @@ static void show_version( void )
   printf( "GNU %s %s\n", program_name, PROGVERSION );
   printf( "Copyright (C) 1994 Andrew L. Moore.\n"
           "Copyright (C) %s Antonio Diaz Diaz.\n", program_year );
-  printf( "License GPLv2+: GNU GPL version 2 or later <http://gnu.org/licenses/gpl.html>\n"
-          "This is free software: you are free to change and redistribute it.\n"
-          "There is NO WARRANTY, to the extent permitted by law.\n" );
+  fputs( "License GPLv2+: GNU GPL version 2 or later <http://gnu.org/licenses/gpl.html>\n"
+         "This is free software: you are free to change and redistribute it.\n"
+         "There is NO WARRANTY, to the extent permitted by law.\n", stdout );
   }
 
 

@@ -5,7 +5,7 @@ START-INFO-DIR-ENTRY
 * Ed: (ed).                     The GNU line editor
 END-INFO-DIR-ENTRY
 
-Copyright (C) 1993, 1994, 2006-2025 Free Software Foundation, Inc.
+Copyright (C) 1993, 1994, 2006-2026 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document under
 the terms of the GNU Free Documentation License, Version 1.3 or any later
@@ -18,7 +18,7 @@ File: ed.info,  Node: Top,  Next: Overview,  Up: (dir)
 The GNU ed line editor
 **********************
 
-This manual is for GNU ed (version 1.22.3, 27 November 2025).
+This manual is for GNU ed (version 1.22.4, 3 January 2026).
 
 * Menu:
 
@@ -37,7 +37,7 @@ This manual is for GNU ed (version 1.22.3, 27 November 2025).
 
 
 Written by Andrew L. Moore, François Pinard, and Antonio Diaz Diaz
-Copyright (C) 1993, 1994, 2006-2025 Free Software Foundation, Inc.
+Copyright (C) 1993, 1994, 2006-2026 Free Software Foundation, Inc.
 
 Permission is granted to copy, distribute and/or modify this document under
 the terms of the GNU Free Documentation License, Version 1.3 or any later
@@ -1605,20 +1605,20 @@ free software.
 
 Tag Table:
 Node: Top529
-Node: Overview1901
-Node: Introduction to line editing4749
-Node: Invoking ed11962
-Node: Argument syntax16018
-Node: Line addressing17780
-Node: Regular expressions21796
-Node: Commands27966
-Ref: print suffixes28301
-Ref: shell escape command40814
-Node: The 's' Command42392
-Node: Limitations45286
-Node: Diagnostics46303
-Node: Problems47132
-Node: GNU Free Documentation License47664
+Node: Overview1899
+Node: Introduction to line editing4747
+Node: Invoking ed11960
+Node: Argument syntax16016
+Node: Line addressing17778
+Node: Regular expressions21794
+Node: Commands27964
+Ref: print suffixes28299
+Ref: shell escape command40812
+Node: The 's' Command42390
+Node: Limitations45284
+Node: Diagnostics46301
+Node: Problems47130
+Node: GNU Free Documentation License47662
 
 End Tag Table
 

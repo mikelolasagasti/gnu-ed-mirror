@@ -1,6 +1,6 @@
 #! /bin/sh
 # check script for GNU ed - The GNU line editor
-# Copyright (C) 2006-2025 Antonio Diaz Diaz.
+# Copyright (C) 2006-2026 Antonio Diaz Diaz.
 #
 # This script is free software; you have unlimited permission
 # to copy, distribute, and modify it.
@@ -52,10 +52,13 @@ echo "p" | "${ED}" -s +?[A-Z] test.txt | grep -q 'even' || test_failed $LINENO
 printf "a\nHello world!\n.\ne test.txt\nf foo.txt\nf\nh\nH\nH\nkx\nl\nn\np\nP\nP\ny\n.z\n# comment\n=\n!:\n.\ne test.txt\n8p\n" | "${ED}" -s | grep -q 'agrarian' || test_failed $LINENO
 echo "q" | "${ED}" -q 'name_with_bell.txt' && test_failed $LINENO
 echo "q" | "${ED}" -q --unsafe-names 'name_with_bell.txt' || test_failed $LINENO
-printf 'w café_iso.txt\nq\n' | "${ED}" -s test.txt || test_failed $LINENO
-printf 'w cafÃ©_utf.txt\nq\n' | "${ED}" -s test.txt || test_failed $LINENO
-cmp 'café_iso.txt' 'cafÃ©_utf.txt' || test_failed $LINENO
-rm -f 'café_iso.txt' 'cafÃ©_utf.txt'
+if touch 'café_iso.txt' 2> /dev/null ; then
+  rm -f 'café_iso.txt'
+  printf 'w café_iso.txt\nq\n' | "${ED}" -s test.txt || test_failed $LINENO
+  printf 'w cafÃ©_utf.txt\nq\n' | "${ED}" -s test.txt || test_failed $LINENO
+  cmp 'café_iso.txt' 'cafÃ©_utf.txt' || test_failed $LINENO
+  rm -f 'café_iso.txt' 'cafÃ©_utf.txt'
+fi
 
 if [ ${fail} != 0 ] ; then echo ; fi
 
